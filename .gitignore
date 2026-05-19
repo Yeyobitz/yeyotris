@@ -33,3 +33,7 @@ dist-ssr
 
 # TypeScript
 *.tsbuildinfo
+
+# VSC tunnel
+code
+vscode_cli.tar.gz
