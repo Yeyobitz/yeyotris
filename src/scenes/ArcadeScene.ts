@@ -29,6 +29,11 @@ export class ArcadeScene extends Phaser.Scene {
   }
 
   create(): void {
+    // Clear stale sprite arrays on scene restart
+    this.boardSprites = []
+    this.currentSprites = []
+    this.ghostSprites = []
+
     this.gameState = new GameState()
     this.gameState.reset()
     this.inputHandler = new InputHandler()
@@ -104,11 +109,12 @@ export class ArcadeScene extends Phaser.Scene {
     }
 
     for (const [keyName, action] of Object.entries(keyMap)) {
-      const keyCode = (Phaser.Input.Keyboard.KeyCodes as Record<string, number>)[keyName]
-      if (keyCode === undefined) continue
-      const key = this.input.keyboard!.addKey(keyCode)
-      key.on('down', () => this.inputHandler.setKey(action, true))
-      key.on('up', () => this.inputHandler.setKey(action, false))
+      this.input.keyboard!.on(`keydown-${keyName}`, () => {
+        this.inputHandler.setKey(action, true)
+      })
+      this.input.keyboard!.on(`keyup-${keyName}`, () => {
+        this.inputHandler.setKey(action, false)
+      })
     }
   }
 

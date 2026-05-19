@@ -22,6 +22,8 @@ export class HUD {
 
   private boardX: number
   private boardY: number
+  private lastNextQueue: string = ''
+  private lastHoldPiece: string | null = null
 
   constructor(scene: Phaser.Scene, gameState: GameState) {
     this.scene = scene
@@ -102,8 +104,17 @@ export class HUD {
     const secs = seconds % 60
     this.timeText.setText(`${mins}:${secs.toString().padStart(2, '0')}`)
 
-    this.renderNextQueue()
-    this.renderHold()
+    const nextQueueStr = this.gameState.nextQueue.slice(0, 5).join(',')
+    if (nextQueueStr !== this.lastNextQueue) {
+      this.lastNextQueue = nextQueueStr
+      this.renderNextQueue()
+    }
+
+    const held = this.gameState.heldPiece
+    if (held !== this.lastHoldPiece) {
+      this.lastHoldPiece = held
+      this.renderHold()
+    }
   }
 
   private renderNextQueue(): void {

@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 export class MenuOverlay {
   scene: Phaser.Scene
   private container!: Phaser.GameObjects.Container
-  private visible = false
+  private visible = true
   private onResume?: () => void
   private onRestart?: () => void
   private onMenu?: () => void
