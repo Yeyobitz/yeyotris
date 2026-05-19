@@ -48,6 +48,13 @@ export class MenuScene extends Phaser.Scene {
       color: '#555577',
     }).setOrigin(0.5)
 
+    // Version number
+    this.add.text(this.scale.width - 16, this.scale.height - 16, 'v0.0.1', {
+      fontSize: '12px',
+      fontFamily: 'monospace',
+      color: '#333355',
+    }).setOrigin(1)
+
     this.input.keyboard?.on('keydown-ENTER', () => {
       this.scene.start('ArcadeScene')
     })
