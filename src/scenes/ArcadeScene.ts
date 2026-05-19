@@ -1,11 +1,12 @@
 import Phaser from 'phaser'
 import { GameState } from '../core/GameState'
 import { InputHandler } from '../core/InputHandler'
-import { BOARD_WIDTH, BOARD_TOTAL_ROWS } from '../config/game.config'
+import { BOARD_WIDTH, BOARD_TOTAL_ROWS, DEFAULT_INPUT_CONFIG } from '../config/game.config'
 import type { InputAction, MoveResult } from '../types'
 import { HUD } from '../ui/HUD'
 import { MenuOverlay } from '../ui/MenuOverlay'
 import { ParticleManager } from '../ui/ParticleManager'
+import { StorageManager } from '../storage/StorageManager'
 
 const CELL = 30
 const VISIBLE_ROWS = BOARD_TOTAL_ROWS - 2
@@ -34,9 +35,17 @@ export class ArcadeScene extends Phaser.Scene {
     this.currentSprites = []
     this.ghostSprites = []
 
+    const settings = StorageManager.getSettings()
+    const inputConfig = {
+      ...DEFAULT_INPUT_CONFIG,
+      das: settings.das,
+      arr: settings.arr,
+      softDropFactor: settings.softDropFactor,
+    }
+
     this.gameState = new GameState()
     this.gameState.reset()
-    this.inputHandler = new InputHandler()
+    this.inputHandler = new InputHandler(inputConfig)
     this.particles = new ParticleManager(this)
 
     this.boardX = (this.scale.width - BOARD_WIDTH * CELL) / 2
@@ -95,17 +104,10 @@ export class ArcadeScene extends Phaser.Scene {
   }
 
   private setupKeyboard(): void {
-    const keyMap: Record<string, InputAction> = {
-      LEFT: 'moveLeft',
-      RIGHT: 'moveRight',
-      DOWN: 'softDrop',
-      UP: 'hardDrop',
-      SPACE: 'hardDrop',
-      Z: 'rotateCCW',
-      X: 'rotateCW',
-      C: 'hold',
-      P: 'pause',
-      ESC: 'pause',
+    const settings = StorageManager.getSettings()
+    const keyMap: Record<string, InputAction> = {}
+    for (const [action, keyName] of Object.entries(settings.keyBindings)) {
+      keyMap[keyName] = action as InputAction
     }
 
     for (const [keyName, action] of Object.entries(keyMap)) {

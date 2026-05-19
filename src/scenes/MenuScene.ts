@@ -37,8 +37,8 @@ export class MenuScene extends Phaser.Scene {
       // TODO: implement leaderboard scene or overlay
     })
 
-    this.createButton(centerX, centerY + 120, 'Controls', () => {
-      this.showControlsOverlay()
+    this.createButton(centerX, centerY + 120, 'Options', () => {
+      this.scene.start('OptionsScene')
     })
 
     // Controls hint at bottom
@@ -82,53 +82,5 @@ export class MenuScene extends Phaser.Scene {
     btnBg.on('pointerdown', onClick)
   }
 
-  private showControlsOverlay(): void {
-    const overlay = this.add.container(0, 0)
 
-    const bg = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.8)
-      .setOrigin(0)
-    overlay.add(bg)
-
-    const panel = this.add.rectangle(this.scale.width / 2, this.scale.height / 2, 420, 360, 0x1a1a2e, 0.98)
-      .setStrokeStyle(2, 0x444488)
-    overlay.add(panel)
-
-    const title = this.add.text(this.scale.width / 2, this.scale.height / 2 - 140, 'CONTROLS', {
-      fontSize: '28px',
-      fontFamily: 'monospace',
-      color: '#ffffff',
-      fontStyle: 'bold',
-    }).setOrigin(0.5)
-    overlay.add(title)
-
-    const controls = [
-      '← / →          Move',
-      '↓              Soft Drop',
-      '↑ / Space      Hard Drop',
-      'Z              Rotate CCW',
-      'X              Rotate CW',
-      'C              Hold',
-      'P / Esc        Pause',
-    ]
-
-    controls.forEach((line, i) => {
-      const t = this.add.text(this.scale.width / 2, this.scale.height / 2 - 80 + i * 36, line, {
-        fontSize: '18px',
-        fontFamily: 'monospace',
-        color: '#aaaacc',
-      }).setOrigin(0.5)
-      overlay.add(t)
-    })
-
-    const closeBtn = this.add.text(this.scale.width / 2, this.scale.height / 2 + 150, 'Close', {
-      fontSize: '20px',
-      fontFamily: 'monospace',
-      color: '#8888aa',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true })
-    overlay.add(closeBtn)
-
-    closeBtn.on('pointerdown', () => overlay.destroy())
-    closeBtn.on('pointerover', () => closeBtn.setColor('#ffffff'))
-    closeBtn.on('pointerout', () => closeBtn.setColor('#8888aa'))
-  }
 }

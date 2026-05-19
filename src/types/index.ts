@@ -52,6 +52,17 @@ export type InputAction =
   | 'hold'
   | 'pause';
 
+export interface KeyBindings {
+  moveLeft: string;
+  moveRight: string;
+  softDrop: string;
+  hardDrop: string;
+  rotateCW: string;
+  rotateCCW: string;
+  hold: string;
+  pause: string;
+}
+
 export interface InputConfig {
   das: number; // ms before auto-shift starts
   arr: number; // ms between auto-shift repeats

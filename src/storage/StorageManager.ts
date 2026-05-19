@@ -2,10 +2,21 @@
  * Storage Manager for persisting high scores and settings.
  */
 
-import type { LeaderboardEntry, GameMode } from '../types';
+import type { LeaderboardEntry, GameMode, KeyBindings } from '../types';
 
 const LEADERBOARD_KEY = 'tetris_leaderboard';
 const SETTINGS_KEY = 'tetris_settings';
+
+export const DEFAULT_KEY_BINDINGS: KeyBindings = {
+  moveLeft: 'LEFT',
+  moveRight: 'RIGHT',
+  softDrop: 'DOWN',
+  hardDrop: 'UP',
+  rotateCW: 'X',
+  rotateCCW: 'Z',
+  hold: 'C',
+  pause: 'ESC',
+};
 
 export interface GameSettings {
   das: number;
@@ -13,6 +24,7 @@ export interface GameSettings {
   softDropFactor: number;
   volumeMusic: number;
   volumeSfx: number;
+  keyBindings: KeyBindings;
 }
 
 export const DEFAULT_SETTINGS: GameSettings = {
@@ -21,6 +33,7 @@ export const DEFAULT_SETTINGS: GameSettings = {
   softDropFactor: 20,
   volumeMusic: 0.5,
   volumeSfx: 0.5,
+  keyBindings: { ...DEFAULT_KEY_BINDINGS },
 };
 
 export class StorageManager {

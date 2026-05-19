@@ -3,6 +3,7 @@ import { BootScene } from './scenes/BootScene'
 import { MenuScene } from './scenes/MenuScene'
 import { ArcadeScene } from './scenes/ArcadeScene'
 import { GameOverScene } from './scenes/GameOverScene'
+import { OptionsScene } from './scenes/OptionsScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -14,7 +15,7 @@ const config: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [BootScene, MenuScene, ArcadeScene, GameOverScene],
+  scene: [BootScene, MenuScene, ArcadeScene, GameOverScene, OptionsScene],
   physics: {
     default: 'arcade',
     arcade: { gravity: { x: 0, y: 0 } },
